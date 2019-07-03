@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        String cont = "";
+        boolean confirm = false;
+
         Scanner scanner = new Scanner(System.in);
         ArrayList<Song> songs = new ArrayList<Song>();
         for (int i = 0; i< 10;i++){
@@ -24,12 +27,23 @@ public class Main {
         }
 
         //look for blue and print if found
-        System.out.println("Type the title of the song you would like to find: ");
-        String titleToFind = scanner.nextLine();
-        for (Song s: songs){
-            if (s.getTitle().equals(titleToFind)){
-                System.out.printf("I found %s \r\n",s.display());
+        do {
+            System.out.println("Type the title of the song you would like to find: ");
+            String titleToFind = scanner.nextLine();
+            for (Song s : songs) {
+                if (s.getTitle().contains(titleToFind)) {
+                    System.out.printf("I found %s \r\n", s.display());
+                    confirm = true;
+                }
             }
-        }
+
+            if(!confirm){
+                System.out.println("Unfortunately that song title is not in your list. Would you like to try again?");
+            }else{
+                System.out.println("Would you like to search for a different title? (yes|no)");
+            }
+            confirm = false;
+            cont = scanner.nextLine();
+        }while(!cont.equalsIgnoreCase("no"));
     }
 }
